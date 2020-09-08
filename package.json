@@ -1,0 +1,23 @@
+{
+  "name": "js-reactivity",
+  "version": "1.0.0",
+  "description": "Add reactivity to your web project",
+  "author": "Mike Mijnheer",
+  "license": "ISC",
+  "source": "src/index.js",
+  "main": "dist/js-reactivity.js",
+  "module": "dist/js-reactivity.module.js",
+  "unpkg": "dist/js-reactivity.umd.js",
+  "modern": "dist/js-reacitivity.modern.js",
+  "scripts": {
+    "build": "microbundle build --no-sourcemap",
+    "dev": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.12.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ashleygwilliams/my_package.git"
+  }
+}
