@@ -24,12 +24,12 @@ export default class Util {
     }
 
     static getNestedFromObj(obj) {
-        var controller = obj.scope;
+        var controller = obj?.scope;
         var path = '';
-        var name = obj.name;
+        var name = obj?.name;
 
         while (!Util.getNested(path + name, controller, true)) {
-            var nestedLoop = controller.appData.loop;
+            var nestedLoop = controller?.appData.loop;
             if (nestedLoop) {
                 controller = nestedLoop.scope;
 

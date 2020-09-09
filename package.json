@@ -8,16 +8,20 @@
   "main": "dist/js-reactivity.js",
   "module": "dist/js-reactivity.module.js",
   "unpkg": "dist/js-reactivity.umd.js",
-  "modern": "dist/js-reacitivity.modern.js",
+  "modern": "dist/js-reacitivity.browser.js",
   "scripts": {
     "build": "microbundle build --no-sourcemap",
-    "dev": "microbundle watch"
+    "dev": "microbundle watch --no-compress"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
     "microbundle": "^0.12.3"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mikemijnheer/js-reactivity.git"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0"
   }
 }

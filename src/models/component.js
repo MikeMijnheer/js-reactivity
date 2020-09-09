@@ -1,6 +1,8 @@
 import Store from './store.js';
+import Util from '../util/util.js';
+import Helper from '../util/helpers.js';
 
-export default class Component extends HTMLElement {
+export class Component extends HTMLElement {
     constructor() {
         super();
         var self = this;
@@ -27,12 +29,12 @@ export default class Component extends HTMLElement {
                     Store.elements.forEach(element => {
                         for (var prop in element.appData) { // prop = variable/loop/condition
 
-                            if (element.appData[prop].scope.nodeName == controller.nodeName) {
+                            if (element.appData[prop].scope?.nodeName == controller.nodeName) {
                                 elements.pushIfNotExist(element);
                             } else {
-                                var loop = element.appData[prop].scope.appData.loop.baseElement.appData.loop;
+                                var loop = element.appData[prop].scope?.appData.loop.baseElement.appData.loop;
                                 var scopeFromLoop = Util.getNestedFromObj(loop).controller;
-                                if (scopeFromLoop.nodeName == controller.nodeName) {
+                                if (scopeFromLoop?.nodeName == controller.nodeName) {
                                     elements.pushIfNotExist(element);
                                 }
                             }
@@ -79,19 +81,19 @@ export default class Component extends HTMLElement {
 
                     elementsToUpdate.forEach(element => {
                         if (element.appData.loop) {
-                            executeLoop(element, targetCopy).then(() => {
-                                initVariables();
-                                initConditions();
-                                initEvents();
+                            Helper.executeLoop(element, targetCopy).then(() => {
+                                Helper.initVariables();
+                                Helper.initConditions();
+                                Helper.initEvents();
                             });
                         }
 
                         if (element.appData.variable) {
-                            executeVariable(element);
+                            Helper.executeVariable(element);
                         }
 
                         if (element.appData.condition) {
-                            executeCondition(element);
+                            Helper.executeCondition(element);
                         }
                     });
                 }

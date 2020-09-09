@@ -1,4 +1,5 @@
 import Util from '../util/util.js';
+import Store from '../models/store.js';
 
 Element.prototype.setAppData = function (value, property = null) {
     if (!this.appData) {
