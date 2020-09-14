@@ -5,14 +5,20 @@ import Helper from '../util/helpers.js';
 export class Component extends HTMLElement {
     constructor() {
         super();
+        this._refs = null;
+    }
+
+    observe(o, callback = null) {
         var self = this;
 
-        this._refs = new Proxy({}, {
+        return new Proxy(o, {
             get(target, key) {
                 const v = target[key];
                 return typeof v == 'object' ? new Proxy(v, this) : v;
             },
             set(target, key, value) {
+                if(typeof callback === 'function') callback(key, value);
+
                 // The goal is to find only the elements that make use of the updated obj
                 // On those elements we execute its variable/loop/condition again, so the view is updated
                 var targetCopy = Util.deepCopy(target); // targetCopy = the current obj
@@ -102,8 +108,9 @@ export class Component extends HTMLElement {
         });
     }
 
+
     set refs(value) {
-        Object.assign(this._refs, value)
+        this._refs = this.observe(value);
     }
 
     get refs() {

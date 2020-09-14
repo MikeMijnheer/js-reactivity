@@ -93,7 +93,7 @@ const helpers =  {
         }
     
         function createElements(array, fromIndex = 1) {
-            array.forEach((value, index) => {
+            array?.forEach((value, index) => {
                 if (index >= fromIndex) {
                     var element = document.createElement(loopElement.nodeName);
                     element.innerHTML = loopElement.appData.loop.template;
@@ -140,7 +140,7 @@ const helpers =  {
             var loopData = scope.appData.loop;
             var baseLoop = loopData.baseElement.appData.loop;
             var actualArray = Util.getNestedFromObj(baseLoop).value;
-            variableElement.innerHTML = Util.getNested(name, actualArray[loopData.index]);
+            if(actualArray?.length) variableElement.innerHTML = Util.getNested(name, actualArray[loopData.index]);
         } else {
             variableElement.innerHTML = Util.getNested(name, scope, true);
         }
@@ -189,7 +189,7 @@ const helpers =  {
                     name: 'click',
                     scope: element.getController(value[1]),
                     method: value[2].match(/(.*)(?=\()/)[1],
-                    properties: convertProperties(value[2].match(/(?<=\()(.*)(?=\))/)[1].split(','))
+                    properties: convertProperties(value[2].match(/(\()(.*)(?=\))/)[2].split(','))
                 };
                 element.setAppData(event, 'event');
                 element.addEventListener(event.name, () => event.scope[event.method](...event.properties));
@@ -199,7 +199,7 @@ const helpers =  {
                 propertiesArray = propertiesArray.map(property => {
                     if (property) {
                         if (/^'.*'$/.test(property)) {
-                            return property.match(/(?<=')(.*)(?=')/)[1]; // surrounded by single quotes
+                            return property.match(/'(.*)'/)[1].replace('\'', ''); // surrounded by single quotes
                         } else {
                             var value = property.match(/(.*?)\.(.*)/); // group before first dot, group after first dot
                             var scope = element.getController(value[1]) || element.getLoop(value[1]);
